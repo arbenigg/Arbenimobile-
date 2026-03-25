@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArbeniMobile - Sistemi i Riparimeve</title>
+    <title>ArbeniMobile - Sistemi i Sigurt</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -17,73 +17,83 @@
 <body>
 
     <div id="app" class="min-h-screen max-w-md mx-auto p-6 flex flex-col">
-        <!-- Header -->
+        <!-- Kreu -->
         <header class="flex justify-between items-center py-8">
             <div class="flex flex-col">
-                <h1 class="text-2xl font-black tracking-tighter text-blue-500 uppercase">ArbeniMobile</h1>
-                <span class="text-[9px] uppercase tracking-[0.4em] text-gray-500 font-bold">Servis i Autorizuar</span>
+                <h1 class="text-2xl font-black tracking-tighter text-blue-500 uppercase italic">ArbeniMobile</h1>
+                <span class="text-[9px] uppercase tracking-[0.4em] text-gray-500 font-bold">Servis i Sigurt</span>
             </div>
-            <button id="navToggle" class="p-3 glass rounded-2xl active:scale-90 transition-all">
+            <button id="navToggle" class="p-3 glass rounded-2xl active:scale-90 transition-all border border-white/10">
                 <i data-lucide="settings" id="navIcon" class="w-5 h-5 text-gray-400"></i>
             </button>
         </header>
 
         <main class="flex-grow">
-            <!-- PAMJA E KLIENTIT -->
+            <!-- SEKSIONI I KLIENTIT -->
             <section id="clientSection" class="space-y-8 animate-in fade-in duration-500">
                 <div class="text-center space-y-2">
-                    <h2 class="text-xl font-bold">Statusi i Riparimit</h2>
-                    <p class="text-gray-500 text-sm">Shkruani kodin tuaj për të parë progresin</p>
+                    <h2 class="text-xl font-bold">Gjej Riparimin Tënd</h2>
+                    <p class="text-gray-500 text-sm italic">Shkruani kodin që ju kemi dhënë</p>
                 </div>
 
-                <div class="relative">
-                    <input type="text" id="trackInput" placeholder="Psh: AM100" class="w-full bg-white/5 border border-white/10 rounded-2xl py-5 px-6 outline-none focus:border-blue-500 text-lg font-bold uppercase tracking-widest">
+                <div class="relative group">
+                    <input type="text" id="trackInput" placeholder="Psh: AM101" class="w-full bg-white/5 border border-white/10 rounded-2xl py-5 px-6 outline-none focus:border-blue-500 text-lg font-bold uppercase tracking-widest transition-all">
                     <button id="trackBtn" class="absolute right-2 top-2 btn-blue p-3 rounded-xl">
                         <i data-lucide="search" class="w-6 h-6"></i>
                     </button>
                 </div>
 
-                <div id="statusResult" class="hidden glass rounded-[2.5rem] p-8 space-y-6">
-                    <!-- Rezultati do te mbushet me JS -->
-                </div>
+                <div id="statusResult" class="hidden glass rounded-[2.5rem] p-8 space-y-6 border border-white/10"></div>
             </section>
 
-            <!-- PAMJA E ADMINIT (PER ARBENIN) -->
+            <!-- MODAL PER PIN (HIDDEN) -->
+            <section id="pinSection" class="hidden space-y-6 text-center py-10">
+                <h2 class="text-lg font-bold uppercase tracking-widest text-blue-500">Hyrja si Admin</h2>
+                <div class="max-w-[200px] mx-auto">
+                    <input type="password" id="pinInput" placeholder="PIN" maxlength="4" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 text-center text-2xl font-bold tracking-[1em] outline-none focus:border-blue-500">
+                </div>
+                <button id="checkPinBtn" class="bg-white/10 px-8 py-3 rounded-xl text-xs font-bold uppercase tracking-widest border border-white/5">Verifiko</button>
+            </section>
+
+            <!-- SEKSIONI I ADMINIT -->
             <section id="adminSection" class="hidden space-y-6 animate-in fade-in duration-500">
-                <h2 class="text-xl font-bold flex items-center gap-2 px-2">
-                    <i data-lucide="plus-circle" class="text-blue-500"></i> Menaxho Riparimet
-                </h2>
-                <div class="glass rounded-3xl p-6 space-y-4">
-                    <input type="text" id="adminId" placeholder="ID (psh: AM100)" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none focus:border-blue-500 font-bold">
-                    <input type="text" id="adminDevice" placeholder="Modeli i Telefonit" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none focus:border-blue-500">
+                <div class="flex items-center justify-between px-2">
+                    <h2 class="text-xl font-bold flex items-center gap-2">
+                        <i data-lucide="shield-check" class="text-blue-500"></i> Paneli i Kontrollit
+                    </h2>
+                </div>
+                
+                <div class="glass rounded-3xl p-6 space-y-5 border border-white/10">
+                    <input type="text" id="adminId" placeholder="Kodi (psh: AM101)" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none font-bold uppercase tracking-widest">
+                    <input type="text" id="adminDevice" placeholder="Modeli i Telefonit" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none">
                     <select id="adminStatus" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none">
-                        <option value="Në Pritje">Në Pritje</option>
-                        <option value="Duke u Punuar">Duke u Punuar</option>
-                        <option value="Gati për Dorëzim">Gati për Dorëzim</option>
+                        <option value="Në Pritje" class="bg-black text-white">Në Pritje</option>
+                        <option value="Duke u Punuar" class="bg-black text-white">Duke u Punuar</option>
+                        <option value="Duke u Testuar" class="bg-black text-white">Duke u Testuar</option>
+                        <option value="Gati për Dorëzim" class="bg-black text-green-400 font-bold">Gati për Dorëzim</option>
                     </select>
-                    <div class="space-y-2 px-1">
-                        <div class="flex justify-between text-[10px] font-bold text-gray-500">
-                            <span>PROGRESI</span>
-                            <span id="progText">50%</span>
+                    <div class="space-y-3 px-1">
+                        <div class="flex justify-between text-[10px] font-bold text-gray-400 uppercase">
+                            <span>Progresi</span>
+                            <span id="progText" class="text-blue-500">50%</span>
                         </div>
-                        <input type="range" id="adminProgress" class="w-full accent-blue-500" min="0" max="100" value="50">
+                        <input type="range" id="adminProgress" class="w-full accent-blue-500 h-1.5 bg-white/10 rounded-full appearance-none" min="0" max="100" value="50">
                     </div>
-                    <button id="saveBtn" class="w-full btn-blue py-4 rounded-2xl font-bold text-lg">RUAAJ TË DHËNAT</button>
+                    <button id="saveBtn" class="w-full btn-blue py-5 rounded-2xl font-black text-sm tracking-[0.2em]">RUAAJ TË DHËNAT</button>
                 </div>
             </section>
         </main>
 
         <footer class="py-10 text-center opacity-20">
-            <p class="text-[8px] uppercase tracking-[0.5em]">ArbeniMobile Official © 2024</p>
+            <p class="text-[8px] uppercase tracking-[0.5em]">ArbeniMobile Secure Service © 2024</p>
         </footer>
     </div>
 
-    <!-- Firebase Integration -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Konfigurimi juaj i saktë
+        // Të dhënat tuaja
         const firebaseConfig = {
             apiKey: "AIzaSyDTTnDL1Nqcvy6RWeBockaajMHe_LUQMxo",
             authDomain: "arbenimobile-1ea9f.firebaseapp.com",
@@ -97,98 +107,108 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Inicializo Ikonat
         lucide.createIcons();
 
-        // Navigimi Admin/Client
+        // ELEMENTET
         const navToggle = document.getElementById('navToggle');
         const navIcon = document.getElementById('navIcon');
         const clientSection = document.getElementById('clientSection');
         const adminSection = document.getElementById('adminSection');
+        const pinSection = document.getElementById('pinSection');
+        const pinInput = document.getElementById('pinInput');
+        
+        // NDËRRIMI I PAMJES (ME PIN)
+        const ADMIN_PIN = "1234"; // NDRYSHO PIN-in KETU
 
         navToggle.onclick = () => {
-            const isAdmin = adminSection.classList.contains('hidden');
-            adminSection.classList.toggle('hidden', !isAdmin);
-            clientSection.classList.toggle('hidden', isAdmin);
-            navIcon.setAttribute('data-lucide', isAdmin ? 'chevron-left' : 'settings');
+            const isClientVisible = !clientSection.classList.contains('hidden');
+            const isAdminVisible = !adminSection.classList.contains('hidden');
+            const isPinVisible = !pinSection.classList.contains('hidden');
+
+            if(isClientVisible) {
+                // Shko te PIN
+                clientSection.classList.add('hidden');
+                pinSection.classList.remove('hidden');
+                navIcon.setAttribute('data-lucide', 'x');
+                pinInput.focus();
+            } else {
+                // Kthehu te Klienti
+                clientSection.classList.remove('hidden');
+                pinSection.classList.add('hidden');
+                adminSection.classList.add('hidden');
+                navIcon.setAttribute('data-lucide', 'settings');
+                pinInput.value = "";
+            }
             lucide.createIcons();
         };
 
-        // Slider Text update
+        document.getElementById('checkPinBtn').onclick = () => {
+            if(pinInput.value === ADMIN_PIN) {
+                pinSection.classList.add('hidden');
+                adminSection.classList.remove('hidden');
+                navIcon.setAttribute('data-lucide', 'x');
+            } else {
+                alert("PIN i gabuar!");
+                pinInput.value = "";
+            }
+            lucide.createIcons();
+        };
+
+        // Ruajtja
         const progInput = document.getElementById('adminProgress');
         progInput.oninput = () => document.getElementById('progText').innerText = `${progInput.value}%`;
 
-        // Ruajtja ne Cloud
         document.getElementById('saveBtn').onclick = async () => {
             const id = document.getElementById('adminId').value.trim().toUpperCase();
             const device = document.getElementById('adminDevice').value.trim();
             const status = document.getElementById('adminStatus').value;
             const progress = progInput.value;
 
-            if(!id || !device) return alert("Ju lutem shkruani Kodin dhe Modelin!");
+            if(!id || !device) return alert("Plotësoni të dhënat!");
 
             try {
-                // Krijohet koleksioni "repairs" ne projektin tuaj
-                await setDoc(doc(db, "repairs", id), { id, device, status, progress });
-                alert("U ruajt me sukses! Klienti tani mund ta shohë.");
+                await setDoc(doc(db, "repairs", id), { 
+                    id, device, status, progress, date: new Date().toLocaleDateString('sq-AL')
+                });
+                alert("U ruajt me sukses!");
                 document.getElementById('adminId').value = "";
                 document.getElementById('adminDevice').value = "";
             } catch(e) {
-                alert("Ndodhi një gabim! Sigurohuni që keni aktivizuar 'Firestore Database' në Firebase.");
-                console.error(e);
+                alert("Gabim në server!");
             }
         };
 
-        // Kerkimi (Për Klientin)
+        // Kërkimi
         document.getElementById('trackBtn').onclick = async () => {
             const id = document.getElementById('trackInput').value.trim().toUpperCase();
             const res = document.getElementById('statusResult');
-
             if(!id) return;
-
-            res.innerHTML = `<div class="flex justify-center"><div class="animate-spin h-6 w-6 border-2 border-blue-500 border-t-transparent rounded-full"></div></div>`;
+            res.innerHTML = `<div class="py-10 text-center text-blue-500 animate-pulse">Po kërkoj...</div>`;
             res.classList.remove('hidden');
 
-            try {
-                const docSnap = await getDoc(doc(db, "repairs", id));
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    res.innerHTML = `
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h3 class="text-2xl font-black tracking-tight">${data.device}</h3>
-                                <p class="text-blue-500 text-[10px] font-bold uppercase tracking-widest mt-1">Statusi i Riparimit</p>
-                            </div>
-                            <span class="bg-blue-500/10 text-blue-400 px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-tighter">
-                                ${data.status}
-                            </span>
+            const docSnap = await getDoc(doc(db, "repairs", id));
+            if (docSnap.exists()) {
+                const d = docSnap.data();
+                res.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-2xl font-black">${d.device}</h3>
+                            <p class="text-gray-500 text-[10px] font-bold uppercase mt-1 italic">Statusi i Riparimit</p>
                         </div>
-                        <div class="space-y-3">
-                            <div class="flex justify-between text-[10px] font-bold text-gray-500 uppercase">
-                                <span>Ecuria e punës</span>
-                                <span>${data.progress}%</span>
-                            </div>
-                            <div class="h-3 bg-white/5 rounded-full overflow-hidden border border-white/5">
-                                <div class="h-full bg-blue-500 rounded-full" style="width: ${data.progress}%"></div>
-                            </div>
+                        <span class="bg-blue-500/10 text-blue-400 px-3 py-1 rounded-lg text-[10px] font-bold uppercase">${d.status}</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between text-[11px] font-bold text-gray-400 uppercase">
+                            <span>Ecuria</span>
+                            <span>${d.progress}%</span>
                         </div>
-                        <div class="pt-6 border-t border-white/5 flex items-center justify-between opacity-30">
-                            <div class="flex items-center gap-2">
-                                <i data-lucide="clock" class="w-3 h-3"></i>
-                                <span class="text-[9px] font-bold uppercase">ID: ${data.id}</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i data-lucide="shield-check" class="w-3 h-3"></i>
-                                <span class="text-[9px] font-bold uppercase">I Siguruar</span>
-                            </div>
+                        <div class="h-4 bg-white/5 rounded-full overflow-hidden p-1">
+                            <div class="h-full bg-blue-500 rounded-full" style="width: ${d.progress}%"></div>
                         </div>
-                    `;
-                    lucide.createIcons();
-                } else {
-                    res.innerHTML = `<p class="text-center text-red-400 text-sm font-bold p-4">Kodi ${id} nuk u gjet! Ju lutem na kontaktoni.</p>`;
-                }
-            } catch(e) {
-                res.innerHTML = `<p class="text-center text-red-400 text-sm p-4">Gabim në lidhje me serverin.</p>`;
+                    </div>
+                `;
+            } else {
+                res.innerHTML = `<p class="text-center p-4 text-red-400 italic">Kodi nuk u gjet!</p>`;
             }
         };
     </script>
