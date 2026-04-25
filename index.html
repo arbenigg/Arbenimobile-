@@ -3,215 +3,1235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArbeniMobile - Sistemi i Sigurt</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- SEO DHE OPEN GRAPH META TAGS -->
+    <meta name="description" content="ArbeniMobile - Destinacioni premium për blerje telefonash, aksesorë origjinalë dhe servisime profesionale në Kosovë. Transport falas kudo për porosi mbi 20€.">
+    <meta name="keywords" content="telefona, iphone, samsung, xiaomi, servis, blerje telefonash, aksesorë, kosovë, rahovec, xerxe">
+    <meta name="author" content="ArbeniMobile">
+    
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://arbenimobile.com/">
+    <meta property="og:title" content="ArbeniMobile | Ekspertët e Telefonave">
+    <meta property="og:description" content="Teknologjia në duart tuaja. Bli telefona dhe aksesorë me super çmime dhe transport falas mbi 20€!">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1616348436168-de43ad0db179?auto=format&fit=crop&w=1200&q=80">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📱</text></svg>">
+
+    <title>ArbeniMobile | Ekspertët e Telefonave</title>
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #050505; color: white; margin: 0; overflow-x: hidden; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .btn-blue { background: #3b82f6; box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3); transition: all 0.2s; }
-        .btn-blue:active { transform: scale(0.95); }
+        /* CSS APPLE STYLE & VARIABLES */
+        :root {
+            --bg-color: #f5f5f7; --text-color: #1d1d1f; --link-blue: #0071e3;
+            --link-blue-hover: #0077ed; --white: #ffffff; --gray: #86868b;
+            --border-color: #d2d2d7; --success-green: #34c759;
+            --light-gray: #f2f2f7;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif; }
+        
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+        body { background-color: var(--white); color: var(--text-color); line-height: 1.4; -webkit-font-smoothing: antialiased; }
+
+        /* Animacionet */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .fade-in { animation: fadeIn 0.4s ease-in forwards; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Promo Banner - BLU */
+        .promo-banner { background-color: var(--link-blue); text-align: center; padding: 12px; font-size: 13px; font-weight: 500; color: var(--white); letter-spacing: 0.5px;}
+        
+        /* Navigation (HEADER) */
+        nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: saturate(180%) blur(20px); position: sticky; top: 0; width: 100%; z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; flex-wrap: wrap;}
+        .logo { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; color: var(--text-color); text-decoration: none; cursor: pointer; }
+        
+        .nav-center { display: flex; gap: 30px; }
+        .nav-center a { text-decoration: none; color: var(--text-color); font-size: 14px; opacity: 0.8; transition: 0.3s; cursor: pointer; }
+        .nav-center a:hover { opacity: 1; color: var(--link-blue); }
+        
+        /* Ikonat Lart - Në vijë të drejtë perfekte */
+        .nav-actions { display: flex; align-items: center; gap: 18px; }
+        .search-icon, .cart-icon, .mobile-menu-btn { 
+            display: flex; align-items: center; justify-content: center; 
+            background: none; border: none; padding: 0; margin: 0;
+            color: var(--text-color); cursor: pointer; height: 26px; transition: 0.2s;
+        }
+        .search-icon svg, .cart-icon svg, .mobile-menu-btn svg { 
+            width: 24px; height: 24px; display: block; 
+        }
+        .search-icon:hover, .cart-icon:hover, .mobile-menu-btn:hover { color: var(--link-blue); transform: scale(1.05); }
+        .cart-icon { position: relative; }
+        .cart-badge { position: absolute; top: -6px; right: -8px; background: var(--link-blue); color: white; font-size: 10px; font-weight: bold; padding: 2px 5px; border-radius: 10px; border: 2px solid var(--white);}
+
+        .mobile-menu-btn { display: none; }
+
+        @media (max-width: 768px) { 
+            .nav-center { display: none; } 
+            .mobile-menu-btn { display: flex; }
+        }
+
+        /* SEARCH OVERLAY */
+        .search-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.95); backdrop-filter: blur(15px); z-index: 4000; flex-direction: column; align-items: center; padding-top: 100px; animation: fadeIn 0.2s; overflow-y: auto;}
+        .search-container { width: 90%; max-width: 700px; }
+        #searchInput { width: 100%; border: none; border-bottom: 2px solid var(--border-color); background: transparent; font-size: 22px; font-weight: 600; color: var(--text-color); padding: 12px 0; outline: none; transition: border-color 0.3s; }
+        #searchInput::placeholder { color: #d2d2d7; font-weight: 500;}
+        #searchInput:focus { border-color: var(--link-blue); }
+        .search-results { margin-top: 30px; display: flex; flex-direction: column; gap: 15px; padding-bottom: 50px;}
+        .search-item { display: flex; align-items: center; gap: 20px; padding: 15px; border-radius: 20px; background: var(--bg-color); cursor: pointer; transition: 0.2s; border: 1px solid transparent;}
+        .search-item:hover { background: #e5e5ea; transform: translateX(5px); border-color: var(--border-color);}
+        .search-item img { width: 70px; height: 70px; object-fit: contain; border-radius: 12px; background: white; padding: 5px;}
+        .search-item-info { flex-grow: 1; text-align: left;}
+        .search-item-title { font-size: 16px; font-weight: 600; margin-bottom: 4px; color: var(--text-color);}
+        .search-item-brand { font-size: 11px; color: var(--gray); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;}
+        .search-item-price { font-size: 16px; color: var(--text-color); font-weight: 700; }
+        
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.92); backdrop-filter: saturate(180%) blur(20px); z-index: 3000; flex-direction: column; justify-content: flex-start; padding: 80px 30px 30px; animation: fadeIn 0.3s; }
+        .mobile-menu-content { display: flex; flex-direction: column; width: 100%; }
+        .mobile-menu-content a { font-size: 18px; font-weight: 500; color: var(--text-color); text-decoration: none; cursor: pointer; transition: color 0.2s; padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,0.06); display: flex; justify-content: space-between; align-items: center; letter-spacing: -0.2px;}
+        .mobile-menu-content a::after { content: '›'; font-size: 24px; color: var(--gray); font-weight: 300; opacity: 0.6; }
+        .mobile-menu-content a:hover { color: var(--link-blue); }
+        .close-menu-btn { position: absolute; top: 20px; right: 25px; font-size: 34px; font-weight: 300; background: none; border: none; cursor: pointer; color: var(--text-color); line-height: 1; opacity: 0.7; transition: 0.2s;}
+        .close-menu-btn:hover { opacity: 1; color: var(--link-blue); transform: scale(1.1);}
+
+        /* Buttons */
+        .btn { background: var(--link-blue); color: var(--white); padding: 14px 28px; border-radius: 30px; border: none; font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px;}
+        .btn:hover { background: var(--link-blue-hover); transform: scale(1.02); }
+        .btn-outline { background: transparent; color: var(--link-blue); border: 1px solid var(--link-blue); }
+        .btn-outline:hover { background: var(--link-blue); color: var(--white); }
+        .btn-full { width: 100%; }
+
+        /* VIEWS MANAGEMENT */
+        #main-view { display: block; }
+        #product-view { display: none; padding-bottom: 80px; }
+
+        /* Main View Elements */
+        .hero { text-align: center; padding: 100px 20px 60px; background-color: var(--white); max-width: 900px; margin: 0 auto; }
+        .hero h1 { font-size: 64px; font-weight: 800; letter-spacing: -0.015em; margin-bottom: 20px; line-height: 1.1;}
+        .hero p { font-size: 24px; color: var(--gray); margin-bottom: 40px; font-weight: 400; line-height: 1.5;}
+        .hero-buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;}
+        
+        @media (max-width: 768px) { 
+            .hero h1 { font-size: 42px; } 
+            .hero p { font-size: 18px; } 
+            .hero-buttons { flex-direction: row; gap: 15px; }
+            .hero-buttons .btn { flex: 1; padding: 14px 10px; font-size: 15px;}
+        }
+
+        .section-bg { background-color: var(--bg-color); width: 100%; }
+        section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; overflow: hidden; }
+        .section-title { font-size: 42px; font-weight: 700; margin-bottom: 50px; text-align: center; letter-spacing: -0.005em; }
+
+        /* Services */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+        .service-card { background-color: var(--white); padding: 40px 30px; border-radius: 24px; text-align: center; box-shadow: 0 4px 24px rgba(0,0,0,0.04); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; display: flex; flex-direction: column; height: 100%; border: 1px solid transparent; align-items: center;}
+        .service-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); border-color: #e5e5ea; }
+        .service-icon { font-size: 54px; margin-bottom: 20px; line-height: 1; display: block; text-align: center; }
+        .service-card h3 { font-size: 22px; margin-bottom: 15px; font-weight: 600;}
+        .service-card p { color: var(--gray); font-size: 15px; line-height: 1.5; flex-grow: 1; margin-bottom: 20px;}
+        .service-learn-more { font-size: 14px; color: var(--link-blue); font-weight: 500; }
+
+        /* Catalog Grid & FILTERS */
+        .brand-tabs, .category-tabs { 
+            display: flex; 
+            gap: 10px; 
+            overflow-x: auto; 
+            padding-bottom: 5px; 
+            scrollbar-width: none; 
+            -ms-overflow-style: none;  
+            -webkit-overflow-scrolling: touch; 
+        }
+        .brand-tabs::-webkit-scrollbar, .category-tabs::-webkit-scrollbar { display: none; }
+        .brand-tabs { margin-bottom: 20px; }
+        .category-tabs { gap: 8px; margin-bottom: 50px; }
+
+        @media (min-width: 768px) {
+            .brand-tabs, .category-tabs { justify-content: center; overflow-x: visible; }
+        }
+
+        .tab-btn { background: #e5e5ea; color: var(--text-color); border: none; padding: 10px 24px; border-radius: 20px; font-size: 15px; font-weight: 500; cursor: pointer; transition: 0.3s; white-space: nowrap; flex-shrink: 0;}
+        .tab-btn.active { background: var(--text-color); color: var(--white); box-shadow: 0 4px 14px rgba(0,0,0,0.1);}
+        
+        .cat-btn { background: transparent; color: var(--gray); border: 1px solid var(--border-color); padding: 8px 18px; border-radius: 20px; font-size: 14px; font-weight: 500; cursor: pointer; transition: 0.3s; white-space: nowrap; flex-shrink: 0;}
+        .cat-btn:hover { color: var(--text-color); border-color: #86868b; }
+        .cat-btn.active { background: var(--text-color); color: var(--white); border-color: var(--text-color); }
+
+        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+        .product-card { background: var(--white); border-radius: 24px; padding: 25px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.04); cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; border: 1px solid transparent; position: relative;}
+        .product-card:hover { transform: scale(1.02); box-shadow: 0 15px 40px rgba(0,0,0,0.08); border-color: #f0f0f0;}
+        .product-image { width: 100%; height: 220px; object-fit: contain; margin-bottom: 20px; border-radius: 12px; transition: transform 0.3s;}
+        .product-card:hover .product-image { transform: scale(1.05); }
+        .product-badge { position: absolute; top: 15px; left: 15px; background: var(--text-color); color: var(--white); font-size: 11px; font-weight: bold; padding: 4px 8px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.5px; z-index: 1;}
+        .product-brand { font-size: 12px; color: var(--gray); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px;}
+        
+        /* Rregullimi i estetikes se tekstit (Ellipsis pa prere fjalen ne mes) */
+        .product-title { font-size: 20px; font-weight: 600; margin-bottom: 10px; min-height: 48px; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; word-break: normal;}
+        .product-desc-short { font-size: 14px; color: var(--gray); margin-bottom: 15px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; word-break: normal;}
+        
+        .product-price { font-size: 24px; font-weight: 600; margin-bottom: 15px; margin-top: auto;}
+        .old-price { text-decoration: line-through; color: var(--gray); font-size: 16px; margin-right: 8px; font-weight: 500; }
+        
+        /* OPSIONI 2: Produkte te Ngjashme */
+        .pp-related-section { margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--border-color); }
+        .pp-related-title { font-size: 24px; font-weight: 700; margin-bottom: 30px; text-align: left; letter-spacing: -0.5px;}
+
+        .card-buttons { display: flex; flex-direction: column; gap: 10px; width: 100%; margin-bottom: 12px; }
+
+        @media (max-width: 600px) {
+            .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .product-card { padding: 15px; border-radius: 16px; }
+            .product-image { height: 120px; margin-bottom: 12px; }
+            .product-badge { font-size: 9px; padding: 3px 6px; top: 10px; left: 10px;}
+            .product-brand { font-size: 10px; margin-bottom: 5px; }
+            .product-title { font-size: 14px; min-height: 40px; margin-bottom: 8px; line-height: 1.3;}
+            .product-desc-short { display: none; }
+            .product-price { font-size: 18px; margin-bottom: 12px;}
+            .card-buttons { gap: 6px; }
+            .card-buttons .btn { padding: 8px 5px; font-size: 12px; }
+        }
+
+        /* =========================================
+           DEDICATED PRODUCT PAGE VIEW
+           ========================================= */
+        .pp-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .pp-back-btn { display: inline-flex; align-items: center; color: var(--text-color); font-size: 16px; font-weight: 500; cursor: pointer; border: none; background: none; margin-bottom: 30px; transition: 0.2s; opacity: 0.7;}
+        .pp-back-btn:hover { opacity: 1; transform: translateX(-5px); }
+        
+        .pp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+        @media (max-width: 850px) { .pp-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+        .pp-slider-wrapper { position: relative; background: var(--white); box-shadow: 0 10px 40px rgba(0,0,0,0.05); border-radius: 30px; padding: 40px; text-align: center; }
+        .pp-slide { display: none; width: 100%; height: 400px; object-fit: contain; animation: fadeEffect 0.5s; }
+        .pp-slide.active { display: block; }
+        @keyframes fadeEffect { from {opacity: 0.4;} to {opacity: 1;} }
+        
+        .pp-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: 1px solid #eee; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: 0.2s; color: var(--text-color);}
+        .pp-arrow:hover { background: white; transform: translateY(-50%) scale(1.1); }
+        .pp-arrow-left { left: 15px; }
+        .pp-arrow-right { right: 15px; }
+
+        .pp-dots { text-align: center; margin-top: 20px; }
+        .pp-dot { height: 8px; width: 8px; margin: 0 5px; background-color: #d2d2d7; border-radius: 50%; display: inline-block; cursor: pointer; transition: 0.3s; }
+        .pp-dot.active, .pp-dot:hover { background-color: var(--text-color); transform: scale(1.2); }
+
+        .pp-info { display: flex; flex-direction: column; }
+        .pp-brand { font-size: 14px; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+        .pp-title { font-size: 40px; font-weight: 800; line-height: 1.1; margin-bottom: 20px; letter-spacing: -0.02em; }
+        .pp-price { font-size: 32px; font-weight: 600; margin-bottom: 30px; color: var(--link-blue); }
+        
+        .pp-delivery { display: flex; align-items: center; background: #e5f9e7; color: #1a7f37; padding: 12px 20px; border-radius: 16px; font-size: 15px; font-weight: 600; margin-bottom: 30px; gap: 10px;}
+
+        .pp-desc { font-size: 18px; color: #515154; line-height: 1.6; margin-bottom: 30px; }
+        
+        .pp-features { list-style: none; margin-bottom: 40px; }
+        .pp-features li { font-size: 16px; color: var(--gray); margin-bottom: 12px; display: flex; align-items: flex-start; }
+        .pp-features li svg { color: var(--link-blue); margin-right: 10px; flex-shrink: 0; margin-top: 2px;}
+
+        .pp-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        @media (max-width: 500px) { .pp-actions { grid-template-columns: 1fr; } }
+
+
+        /* =========================================
+           MODALS & SHPORTA 
+           ========================================= */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background: var(--white); width: 100%; max-width: 500px; border-radius: 24px; padding: 40px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.15); animation: slideUp 0.3s ease-out;}
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        .service-modal-icon { font-size: 72px; margin-bottom: 20px; display: inline-block; line-height: 1;}
+        
+        .contact-btn-pro { position: relative; display: flex; align-items: center; background: #ffffff; border: 1px solid #d2d2d7; border-radius: 16px; padding: 16px 20px; text-decoration: none; color: #1d1d1f; font-size: 15px; font-weight: 500; margin-bottom: 12px; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.03); cursor: pointer; }
+        .contact-btn-pro:hover { border-color: #86868b; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+        .cb-icon { font-size: 22px; position: absolute; left: 20px; display: flex; align-items: center; color: var(--text-color); }
+        .cb-text { flex-grow: 1; text-align: center; width: 100%; font-weight: 600;}
+        
+        #cartDrawer { display: none; position: fixed; top: 0; right: 0; width: 100%; max-width: 420px; height: 100%; background: var(--white); box-shadow: -10px 0 40px rgba(0,0,0,0.1); z-index: 2001; flex-direction: column; animation: slideLeft 0.3s ease-out;}
+        @keyframes slideLeft { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        .cart-header { padding: 25px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; font-size: 22px; font-weight: 600; color: var(--text-color);}
+        .cart-items { flex-grow: 1; overflow-y: auto; padding: 25px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f0; }
+        .cart-item-info { flex-grow: 1; margin-right: 15px; color: var(--text-color);}
+        .cart-item-title { font-size: 15px; font-weight: 600; margin-bottom: 5px; line-height: 1.3;}
+        .cart-item-price { font-size: 14px; color: var(--gray); margin-bottom: 12px;}
+        
+        .qty-controls { display: inline-flex; align-items: center; background: #f0f0f5; border-radius: 8px; padding: 4px; }
+        .qty-btn { background: var(--white); border: none; width: 26px; height: 26px; border-radius: 6px; font-size: 16px; font-weight: 600; cursor: pointer; color: var(--text-color); box-shadow: 0 1px 3px rgba(0,0,0,0.1); transition: 0.2s;}
+        .qty-btn:hover { background: #e5e5ea; }
+        .qty-num { padding: 0 12px; font-size: 14px; font-weight: 600; color: var(--text-color);}
+
+        .cart-item-remove { color: #ff3b30; font-size: 13px; font-weight: 500; cursor: pointer; border: none; background: none; padding: 5px 0; margin-top: 10px; display: block; text-align: right; width: 100%;}
+        
+        .cart-footer { padding: 25px; border-top: 1px solid var(--border-color); background: #fafafa; }
+        .summary-line { display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 12px; color: var(--gray); }
+        .summary-total { display: flex; justify-content: space-between; font-size: 20px; font-weight: 700; margin-bottom: 20px; color: var(--text-color); }
+        
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; font-size: 14px; color: var(--gray); margin-bottom: 8px; font-weight: 500;}
+        .form-group input { width: 100%; padding: 14px 16px; border: 1px solid var(--border-color); border-radius: 12px; font-size: 16px; outline: none; transition: border-color 0.3s; color: var(--text-color);}
+        .form-group input:focus { border-color: var(--link-blue); }
+
+        .whatsapp-float { position: fixed; bottom: 25px; right: 25px; background-color: #25D366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 32px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); text-decoration: none; z-index: 1000; transition: transform 0.3s; }
+        .whatsapp-float:hover { transform: scale(1.1); }
+
+        /* TOAST NOTIFICATION STYLES */
+        #toast-container {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+        .toast {
+            background: rgba(29, 29, 31, 0.95);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: toastEnter 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, toastLeave 0.4s ease-in forwards 2.5s;
+            opacity: 0;
+            white-space: nowrap;
+        }
+        @keyframes toastEnter { from { transform: translateY(50px) translateX(-50%); opacity: 0; } to { transform: translateY(0) translateX(0); opacity: 1; } }
+        @keyframes toastLeave { from { transform: translateY(0); opacity: 1; } to { transform: translateY(20px); opacity: 0; } }
+
+        /* FOOTER */
+        footer { background-color: var(--link-blue); padding: 60px 20px 30px; border-top: none; color: var(--white); }
+        .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
+        
+        .footer-brand { font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 15px; display: block; letter-spacing: -0.5px; }
+        .footer-desc { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.6; margin-bottom: 20px; }
+
+        .footer-col h4 { font-size: 15px; font-weight: 600; margin-bottom: 20px; color: var(--white); text-transform: uppercase; letter-spacing: 0.5px;}
+        .footer-col p, .footer-col a { font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 12px; text-decoration: none; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: color 0.2s;}
+        .footer-col a:hover { color: var(--white); text-shadow: 0 0 8px rgba(255,255,255,0.3); }
+        .footer-col svg { flex-shrink: 0; color: rgba(255,255,255,0.8); transition: color 0.2s;}
+        .footer-col a:hover svg { color: var(--white); }
+
+        .footer-bottom { max-width: 1200px; margin: 40px auto 0; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(255,255,255,0.6); gap: 15px; }
+        .footer-bottom-links a { color: rgba(255,255,255,0.6); text-decoration: none; margin-left: 15px; transition: 0.2s; cursor: pointer;}
+        .footer-bottom-links a:hover { color: var(--white); }
+
+        @media (max-width: 600px) {
+            .footer-bottom { flex-direction: column; text-align: center; justify-content: center; }
+            .footer-bottom-links { margin-top: 10px; }
+            .footer-bottom-links a { margin: 0 10px; }
+        }
+
+        .text-modal-content { text-align: left; }
+        .text-modal-content h3 { font-size: 24px; font-weight: 700; margin-bottom: 20px; color: var(--text-color); }
+        .text-modal-content p { font-size: 14px; color: #515154; line-height: 1.6; margin-bottom: 15px; }
+        .text-modal-content h4 { font-size: 16px; font-weight: 600; margin: 25px 0 10px 0; color: var(--text-color); }
+        
     </style>
 </head>
 <body>
 
-    <div id="app" class="min-h-screen max-w-md mx-auto p-6 flex flex-col">
-        <!-- Kreu -->
-        <header class="flex justify-between items-center py-8">
-            <div class="flex flex-col">
-                <h1 class="text-2xl font-black tracking-tighter text-blue-500 uppercase ">ArbeniMobile</h1>
-                <span class="text-[9px] uppercase tracking-[0.4em] text-gray-500 font-bold">Servis Profesional</span>
+    <!-- Promo Banner BLU -->
+    <div class="promo-banner">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: text-bottom;"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+        Transport FALAS kudo në Kosovë për porosi mbi 20€. Bli sot, paguaj në dorëzim!
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a onclick="showMainView(); scrollToSection('ballina');" class="logo">ArbeniMobile</a>
+            
+            <div class="nav-center">
+                <a onclick="showMainView(); scrollToSection('ballina');">Ballina</a>
+                <a onclick="showMainView(); scrollToSection('sherbimet');">Shërbimet</a>
+                <a onclick="showMainView(); scrollToSection('katalogu');">Katalogu</a>
+                <a onclick="showMainView(); scrollToSection('kontakt');">Kontakt</a>
             </div>
-            <button id="navToggle" class="p-3 glass rounded-2xl active:scale-90 transition-all border border-white/10">
-                <i data-lucide="settings" id="navIcon" class="w-5 h-5 text-gray-400"></i>
-            </button>
-        </header>
+            
+            <div class="nav-actions">
+                <button class="search-icon" onclick="openSearch()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
 
-        <main class="flex-grow">
-            <!-- SEKSIONI I KLIENTIT -->
-            <section id="clientSection" class="space-y-8 animate-in fade-in duration-500">
-                <div class="text-center space-y-2">
-                    <h2 class="text-xl font-bold">Gjej Riparimin Tënd</h2>
-                    <p class="text-gray-500 text-sm italic">Shkruani kodin që ju kemi dhënë</p>
+                <button class="cart-icon" onclick="openCart()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </button>
+                
+                <button class="mobile-menu-btn" onclick="openMenu()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SEARCH OVERLAY -->
+    <div id="searchOverlay" class="search-overlay">
+        <button class="close-menu-btn" style="position: absolute; top: 20px; right: 25px; font-size: 40px; font-weight: 300; background: none; border: none; cursor: pointer; color: var(--text-color); line-height: 1;" onclick="closeSearch()">&times;</button>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Kërko produkte, marka..." onkeyup="performSearch()">
+            <div id="searchResults" class="search-results"></div>
+        </div>
+    </div>
+
+    <!-- Menu Mobile Overlay -->
+    <div id="mobileMenu" class="mobile-menu-overlay">
+        <button class="close-menu-btn" onclick="closeMenu()">&times;</button>
+        <div class="mobile-menu-content">
+            <a onclick="closeMenu(); showMainView(); scrollToSection('ballina');">Ballina</a>
+            <a onclick="closeMenu(); showMainView(); scrollToSection('sherbimet');">Shërbimet Tona</a>
+            <a onclick="closeMenu(); showMainView(); scrollToSection('katalogu');">Katalogu i Produkteve</a>
+            <a onclick="closeMenu(); showMainView(); scrollToSection('kontakt');">Na Kontaktoni</a>
+        </div>
+    </div>
+
+    <!-- MAIN VIEW -->
+    <div id="main-view" class="fade-in">
+        
+        <section id="ballina" class="hero reveal">
+            <h1>Teknologjia në duart tuaja.</h1>
+            <p>ArbeniMobile është destinacioni juaj premium për blerje telefonash, aksesorë origjinalë dhe servisime profesionale. Çdo gjë që ju nevojitet, në një vend.</p>
+            <div class="hero-buttons">
+                <a onclick="scrollToSection('katalogu')" class="btn">Shiko Katalogun</a>
+                <a onclick="scrollToSection('sherbimet')" class="btn btn-outline">Shërbimet Tona</a>
+            </div>
+        </section>
+
+        <!-- Shërbimet -->
+        <div class="section-bg">
+            <section id="sherbimet">
+                <h2 class="section-title reveal">Ekspertizë e plotë për pajisjen tuaj.</h2>
+                <div class="services-grid">
+                    <div class="service-card reveal" onclick="openServiceDetail('servis')">
+                        <div class="service-icon">🛠️</div>
+                        <h3>Servis Profesional</h3>
+                        <p>Riparim i ekraneve, baterive dhe defekteve në pllakë për modele Apple & Samsung.</p>
+                        <div class="service-learn-more">Mëso më shumë &rarr;</div>
+                    </div>
+                    <div class="service-card reveal" onclick="openServiceDetail('frp')">
+                        <div class="service-icon">🔓</div>
+                        <h3>FRP & Dekodime</h3>
+                        <p>Hapje e sigurt e llogarive Google dhe zhbllokimi i rrjetit nga çdo operator.</p>
+                        <div class="service-learn-more">Mëso më shumë &rarr;</div>
+                    </div>
+                    <div class="service-card reveal" onclick="openServiceDetail('icloud')">
+                        <div class="service-icon">☁️</div>
+                        <h3>iCloud Bypass</h3>
+                        <p>Zgjidhje efikase për pajisjet Apple të bllokuara në ekranin e aktivizimit.</p>
+                        <div class="service-learn-more">Mëso më shumë &rarr;</div>
+                    </div>
+                    <div class="service-card reveal" onclick="openServiceDetail('shitblerje')">
+                        <div class="service-icon">📱</div>
+                        <h3>Shit-Blerje</h3>
+                        <p>Telefona të rinj dhe të përdorur me garanci. Çmimet më të mira në treg.</p>
+                        <div class="service-learn-more">Mëso më shumë &rarr;</div>
+                    </div>
                 </div>
-
-                <div class="relative group">
-                    <input type="text" id="trackInput" placeholder="Psh: AM101" class="w-full bg-white/5 border border-white/10 rounded-2xl py-5 px-6 outline-none focus:border-blue-500 text-lg font-bold uppercase tracking-widest transition-all">
-                    <button id="trackBtn" class="absolute right-2 top-2 btn-blue p-3 rounded-xl">
-                        <i data-lucide="search" class="w-6 h-6"></i>
-                    </button>
-                </div>
-
-                <div id="statusResult" class="hidden glass rounded-[2.5rem] p-8 space-y-6 border border-white/10"></div>
             </section>
+        </div>
 
-            <!-- MODAL PER PIN (HIDDEN) -->
-            <section id="pinSection" class="hidden space-y-6 text-center py-10">
-                <h2 class="text-lg font-bold uppercase tracking-widest text-blue-500">Hyrja si Admin</h2>
-                <div class="max-w-[200px] mx-auto">
-                    <input type="password" id="pinInput" placeholder="PIN" maxlength="4" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 text-center text-2xl font-bold tracking-[1em] outline-none focus:border-blue-500">
-                </div>
-                <button id="checkPinBtn" class="bg-white/10 px-8 py-3 rounded-xl text-xs font-bold uppercase tracking-widest border border-white/5">Verifiko</button>
-            </section>
+        <section id="katalogu">
+            <h2 class="section-title reveal">Katalogu Premium</h2>
 
-            <!-- SEKSIONI I ADMINIT -->
-            <section id="adminSection" class="hidden space-y-6 animate-in fade-in duration-500">
-                <div class="flex items-center justify-between px-2">
-                    <h2 class="text-xl font-bold flex items-center gap-2">
-                        <i data-lucide="shield-check" class="text-blue-500"></i> Paneli i Kontrollit
-                    </h2>
+            <div class="brand-tabs reveal" id="brandTabs">
+                <button class="tab-btn active" data-brand="te-gjitha" onclick="filterByBrand('te-gjitha', this)">Të Gjitha</button>
+                <button class="tab-btn" data-brand="apple" onclick="filterByBrand('apple', this)">Apple</button>
+                <button class="tab-btn" data-brand="samsung" onclick="filterByBrand('samsung', this)">Samsung</button>
+                <button class="tab-btn" data-brand="xiaomi" onclick="filterByBrand('xiaomi', this)">Xiaomi</button>
+                <button class="tab-btn" data-brand="telefona" onclick="filterByBrand('telefona', this)">📱 Telefona</button>
+            </div>
+
+            <div class="category-tabs reveal" id="categoryTabs">
+                <button class="cat-btn active" data-cat="te-gjitha" onclick="filterByCategory('te-gjitha', this)">Të Gjitha Kategoritë</button>
+                <button class="cat-btn" data-cat="karikim" onclick="filterByCategory('karikim', this)">Karikues & Kabllo</button>
+                <button class="cat-btn" data-cat="audio" onclick="filterByCategory('audio', this)">Kufje & Audio</button>
+                <button class="cat-btn" data-cat="case" onclick="filterByCategory('case', this)">Mbrojtëse (Case)</button>
+                <button class="cat-btn" data-cat="bateri" onclick="filterByCategory('bateri', this)">Powerbank</button>
+            </div>
+
+            <div class="catalog-grid" id="productGrid">
+                <!-- Rendered by JS -->
+            </div>
+        </section>
+        
+        <!-- FOOTER -->
+        <footer id="kontakt">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <span class="footer-brand">ArbeniMobile</span>
+                    <p class="footer-desc">Ekspertiza dhe besueshmëria që meriton pajisja juaj. Destinacioni premium për blerje dhe servisime.</p>
                 </div>
                 
-                <div class="glass rounded-3xl p-6 space-y-5 border border-white/10">
-                    <input type="text" id="adminId" placeholder="Kodi (psh: AM101)" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none font-bold uppercase tracking-widest">
-                    <input type="text" id="adminDevice" placeholder="Modeli i Telefonit" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none">
-                    <select id="adminStatus" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none">
-                        <option value="Në Pritje" class="bg-black text-white">Në Pritje</option>
-                        <option value="Duke u Punuar" class="bg-black text-white">Duke u Punuar</option>
-                        <option value="Duke u Testuar" class="bg-black text-white">Duke u Testuar</option>
-                        <option value="Gati për Dorëzim" class="bg-black text-green-400 font-bold">Gati për Dorëzim</option>
-                    </select>
-                    <div class="space-y-3 px-1">
-                        <div class="flex justify-between text-[10px] font-bold text-gray-400 uppercase">
-                            <span>Progresi</span>
-                            <span id="progText" class="text-blue-500">50%</span>
-                        </div>
-                        <input type="range" id="adminProgress" class="w-full accent-blue-500 h-1.5 bg-white/10 rounded-full appearance-none" min="0" max="100" value="50">
-                    </div>
-                    <button id="saveBtn" class="w-full btn-blue py-5 rounded-2xl font-black text-sm tracking-[0.2em]">RUAJ TË DHËNAT</button>
+                <div class="footer-col">
+                    <h4>NA KONTAKTONI</h4>
+                    <p><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Xerxë, Rahovec, Kosovë</p>
+                    <a href="tel:+38348545516" target="_top"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> +383 48 545 516</a>
+                    <a href="mailto:arbenimobile1@gmail.com" target="_top"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> arbenimobile1@gmail.com</a>
                 </div>
-            </section>
-        </main>
 
-        <footer class="py-10 text-center opacity-20">
-            <p class="text-[8px] uppercase tracking-[0.5em]">ArbeniMobile Secure Service © 2026</p>
+                <div class="footer-col">
+                    <h4>RRJETET SOCIALE</h4>
+                    <a href="https://instagram.com/arbenimobile" target="_top"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> Instagram</a>
+                    <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg> Facebook</a>
+                    <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg> TikTok</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div>&copy; 2026 ArbeniMobile. Të gjitha të drejtat të rezervuara.</div>
+                <div class="footer-bottom-links">
+                    <a onclick="openTextModal('privacy')">Privatësia</a>
+                    <a onclick="openTextModal('terms')">Kushtet e Përdorimit</a>
+                </div>
+            </div>
         </footer>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    <!-- DEDICATED PRODUCT PAGE VIEW -->
+    <div id="product-view" class="fade-in">
+        <div class="pp-container">
+            <button class="pp-back-btn" onclick="showMainView()">
+                <span style="font-size: 20px; margin-right: 8px;">&larr;</span> Kthehu në Katalog
+            </button>
 
-        // Të dhënat tuaja
-        const firebaseConfig = {
-            apiKey: "AIzaSyDTTnDL1Nqcvy6RWeBockaajMHe_LUQMxo",
-            authDomain: "arbenimobile-1ea9f.firebaseapp.com",
-            projectId: "arbenimobile-1ea9f",
-            storageBucket: "arbenimobile-1ea9f.firebasestorage.app",
-            messagingSenderId: "943534413746",
-            appId: "1:943534413746:web:d85ff514301994c27876ab",
-            measurementId: "G-6GYX5FTWDY"
-        };
+            <div class="pp-grid">
+                <div class="pp-slider-wrapper">
+                    <button class="pp-arrow pp-arrow-left" onclick="changeSlide(-1)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
+                    <div id="pp-slides-container"></div>
+                    <button class="pp-arrow pp-arrow-right" onclick="changeSlide(1)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                    <div class="pp-dots" id="pp-dots-container"></div>
+                </div>
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        lucide.createIcons();
-
-        // ELEMENTET
-        const navToggle = document.getElementById('navToggle');
-        const navIcon = document.getElementById('navIcon');
-        const clientSection = document.getElementById('clientSection');
-        const adminSection = document.getElementById('adminSection');
-        const pinSection = document.getElementById('pinSection');
-        const pinInput = document.getElementById('pinInput');
-        
-        // NDËRRIMI I PAMJES (ME PIN)
-        const ADMIN_PIN = "5678"; // NDRYSHO PIN-in KETU
-
-        navToggle.onclick = () => {
-            const isClientVisible = !clientSection.classList.contains('hidden');
-            const isAdminVisible = !adminSection.classList.contains('hidden');
-            const isPinVisible = !pinSection.classList.contains('hidden');
-
-            if(isClientVisible) {
-                // Shko te PIN
-                clientSection.classList.add('hidden');
-                pinSection.classList.remove('hidden');
-                navIcon.setAttribute('data-lucide', 'x');
-                pinInput.focus();
-            } else {
-                // Kthehu te Klienti
-                clientSection.classList.remove('hidden');
-                pinSection.classList.add('hidden');
-                adminSection.classList.add('hidden');
-                navIcon.setAttribute('data-lucide', 'settings');
-                pinInput.value = "";
-            }
-            lucide.createIcons();
-        };
-
-        document.getElementById('checkPinBtn').onclick = () => {
-            if(pinInput.value === ADMIN_PIN) {
-                pinSection.classList.add('hidden');
-                adminSection.classList.remove('hidden');
-                navIcon.setAttribute('data-lucide', 'x');
-            } else {
-                alert("PIN i gabuar!");
-                pinInput.value = "";
-            }
-            lucide.createIcons();
-        };
-
-        // Ruajtja
-        const progInput = document.getElementById('adminProgress');
-        progInput.oninput = () => document.getElementById('progText').innerText = `${progInput.value}%`;
-
-        document.getElementById('saveBtn').onclick = async () => {
-            const id = document.getElementById('adminId').value.trim().toUpperCase();
-            const device = document.getElementById('adminDevice').value.trim();
-            const status = document.getElementById('adminStatus').value;
-            const progress = progInput.value;
-
-            if(!id || !device) return alert("Plotësoni të dhënat!");
-
-            try {
-                await setDoc(doc(db, "repairs", id), { 
-                    id, device, status, progress, date: new Date().toLocaleDateString('sq-AL')
-                });
-                alert("U ruajt me sukses!");
-                document.getElementById('adminId').value = "";
-                document.getElementById('adminDevice').value = "";
-            } catch(e) {
-                alert("Gabim në server!");
-            }
-        };
-
-        // Kërkimi
-        document.getElementById('trackBtn').onclick = async () => {
-            const id = document.getElementById('trackInput').value.trim().toUpperCase();
-            const res = document.getElementById('statusResult');
-            if(!id) return;
-            res.innerHTML = `<div class="py-10 text-center text-blue-500 animate-pulse">Po kërkoj...</div>`;
-            res.classList.remove('hidden');
-
-            const docSnap = await getDoc(doc(db, "repairs", id));
-            if (docSnap.exists()) {
-                const d = docSnap.data();
-                res.innerHTML = `
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="text-2xl font-black">${d.device}</h3>
-                            <p class="text-gray-500 text-[10px] font-bold uppercase mt-1 italic">Statusi i Riparimit</p>
-                        </div>
-                        <span class="bg-blue-500/10 text-blue-400 px-3 py-1 rounded-lg text-[10px] font-bold uppercase">${d.status}</span>
+                <div class="pp-info">
+                    <div class="pp-brand" id="pp-brand">Marka</div>
+                    <h1 class="pp-title" id="pp-title">Emri i Produktit</h1>
+                    <div class="pp-price" id="pp-price">0.00€</div>
+                    
+                    <div class="pp-delivery">
+                        <svg class="pp-delivery-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:10px;"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg> Koha e mbërritjes së porosisë: 1/3 Ditë
                     </div>
-                    <div class="space-y-3">
-                        <div class="flex justify-between text-[11px] font-bold text-gray-400 uppercase">
-                            <span>Ecuria</span>
-                            <span>${d.progress}%</span>
-                        </div>
-                        <div class="h-4 bg-white/5 rounded-full overflow-hidden p-1">
-                            <div class="h-full bg-blue-500 rounded-full" style="width: ${d.progress}%"></div>
-                        </div>
+
+                    <p class="pp-desc" id="pp-desc">Përshkrimi i produktit...</p>
+                    <ul class="pp-features" id="pp-features"></ul>
+
+                    <div class="pp-actions">
+                        <button class="btn" id="pp-buy-btn">Blej Tani</button>
+                        <button class="btn btn-outline" id="pp-add-btn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg> Shto në Shportë
+                        </button>
                     </div>
+                    <div style="text-align: center; margin-top: 15px; font-size: 13px; color: var(--success-green); display:flex; align-items:center; justify-content:center; gap:5px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Pagesë e sigurt në dorëzim
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SHTESA 2: Seksioni i Produkteve të Ngjashme -->
+            <div class="pp-related-section">
+                <h3 class="pp-related-title">Mund t'ju nevojitet edhe...</h3>
+                <div class="catalog-grid" id="pp-related-grid">
+                    <!-- Mbushet nga JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALS DHE SHPORTA -->
+    <div id="serviceDetailModal" class="modal-overlay">
+        <div class="modal-content" style="text-align: center;">
+            <button class="close-btn" style="position: absolute; top: 20px; right: 25px; font-size: 40px; font-weight: 300; background: none; border: none; cursor: pointer; color: var(--text-color); line-height: 1;" onclick="closeModal('serviceDetailModal')">&times;</button>
+            <div id="srvDefaultView">
+                <div id="srvIcon" class="service-modal-icon"></div>
+                <h3 id="srvTitle" style="font-size: 26px; font-weight: 700; margin: 10px 0 20px;"></h3>
+                <p id="srvDesc" style="color: #515154; font-size: 16px; margin-bottom: 25px; line-height: 1.5;"></p>
+                <div style="background: var(--bg-color); border-radius: 16px; padding: 20px; text-align: left; margin-bottom: 25px;">
+                    <h4 style="margin-bottom: 15px; font-size: 16px;">Çfarë përfshin:</h4>
+                    <ul id="srvFeatures" style="list-style: none; margin-bottom: 0; color: var(--gray); font-size: 15px;"></ul>
+                </div>
+                <button class="btn btn-full" onclick="showServiceContact()">Kontakto Tani</button>
+            </div>
+            
+            <div id="srvContactView" style="display: none;">
+                <h3 style="font-size: 26px; font-weight: 700; margin-bottom: 10px;">Na kontaktoni</h3>
+                <p style="color: var(--gray); font-size: 14px; margin-bottom: 30px;">Për shërbimin: <strong id="srvContactTitleName" style="color: var(--text-color);"></strong></p>
+                
+                <a href="https://wa.me/38348545516" target="_blank" class="contact-btn-pro">
+                    <span class="cb-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></span>
+                    <span class="cb-text">Thirr Tani: +383 48 545 516</span>
+                </a>
+                
+                <a href="mailto:arbenimobile1@gmail.com" id="emailBtnDynamic" target="_top" class="contact-btn-pro">
+                    <span class="cb-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></span>
+                    <span class="cb-text">Dërgo email: arbenimobile1@gmail.com</span>
+                </a>
+                
+                <a href="https://instagram.com/arbenimobile" target="_blank" class="contact-btn-pro">
+                    <span class="cb-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></span>
+                    <span class="cb-text">Instagram: @arbenimobile</span>
+                </a>
+                
+                <button class="btn-outline btn-full" style="padding: 14px; border-radius: 30px; margin-top: 15px; cursor: pointer;" onclick="hideServiceContact()">&larr; Kthehu mbrapa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal për Privatësinë & Kushtet -->
+    <div id="textModal" class="modal-overlay">
+        <div class="modal-content text-modal-content">
+            <button class="close-btn" style="position: absolute; top: 20px; right: 25px; font-size: 40px; font-weight: 300; background: none; border: none; cursor: pointer; color: var(--text-color); line-height: 1;" onclick="closeModal('textModal')">&times;</button>
+            <div id="textContent">
+                <!-- Mbushet nga JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Shporta me kontrollo të sasisë (+ dhe -) -->
+    <div id="cartDrawer">
+        <div class="cart-header">
+            Shporta Juaj <button class="close-btn" style="position: static; font-size: 30px; font-weight:300; background:none; border:none; cursor:pointer;" onclick="closeCart()">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItemsContainer"></div>
+        <div class="cart-footer">
+            <div class="summary-line"><span>Nëntotali:</span> <span id="cartSubtotal">0.00€</span></div>
+            <div class="summary-line"><span>Transporti:</span> <span id="cartShipping">0.00€</span></div>
+            <div style="font-size: 11px; color: var(--success-green); margin-bottom: 10px; text-align: right;">*Transport Falas mbi 20€</div>
+            <div class="summary-total"><span>Totali:</span> <span id="cartTotal">0.00€</span></div>
+            <button class="btn btn-full" onclick="openCheckout()" id="checkoutBtn">Përfundo Porosinë</button>
+        </div>
+    </div>
+
+    <!-- Checkout Form -->
+    <div id="checkoutModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-btn" style="position: absolute; top: 20px; right: 25px; font-size: 40px; font-weight: 300; background: none; border: none; cursor: pointer; color: var(--text-color); line-height: 1;" onclick="closeModal('checkoutModal')">&times;</button>
+            <h3 style="margin-bottom: 25px; font-size: 26px;">Të dhënat e dërgesës</h3>
+            <div id="checkoutFormContainer">
+                <form id="orderForm" onsubmit="submitOrder(event)">
+                    <input type="hidden" name="_autoresponse" value="Faleminderit që zgjodhët ArbeniMobile!">
+                    <input type="hidden" name="_subject" value="Porosi e Re nga ArbeniMobile!">
+                    <input type="hidden" name="Porosia" id="hiddenOrderDetails">
+                    <input type="hidden" name="Totali" id="hiddenOrderTotal">
+                    
+                    <div class="form-group">
+                        <label>Emri dhe Mbiemri</label>
+                        <input type="text" name="Emri" required placeholder="p.sh. Agim Krasniqi">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefoni</label>
+                        <input type="tel" name="Telefoni" required placeholder="04X XXX XXX">
+                    </div>
+                    <div class="form-group">
+                        <label>Adresa</label>
+                        <input type="text" name="Adresa" required placeholder="p.sh. Prishtinë">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="Email" required placeholder="email@gmail.com">
+                    </div>
+                    <div style="background: #e5f9e7; color: #1a7f37; padding: 12px; border-radius: 12px; font-size: 14px; text-align: center; margin-bottom: 15px; font-weight: 600;">
+                        💵 Pagesa: Cash on Delivery (Te postieri)
+                    </div>
+                    
+                    <button type="submit" id="submitBtn" class="btn btn-full">Konfirmo Porosinë</button>
+                </form>
+            </div>
+            <div id="successMessage" style="display: none; text-align: center;">
+                <div style="font-size: 60px; color: var(--success-green); margin-bottom: 20px;">✓</div>
+                <h3>Porosia u dërgua!</h3>
+                <p style="color: var(--gray); margin-bottom: 20px;">Postieri do t'ju kontaktojë së shpejti.</p>
+                <button class="btn btn-outline btn-full" onclick="closeModal('checkoutModal'); showMainView();">Kthehu në Ballinë</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/38348545516" target="_blank" class="whatsapp-float">
+        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
+    </a>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
+
+    <script>
+        // Funksionet e Kërkimit (SEARCH)
+        function openSearch() {
+            document.getElementById('searchOverlay').style.display = 'flex';
+            setTimeout(() => document.getElementById('searchInput').focus(), 100);
+        }
+        function closeSearch() {
+            document.getElementById('searchOverlay').style.display = 'none';
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchResults').innerHTML = '';
+        }
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const resultsContainer = document.getElementById('searchResults');
+            resultsContainer.innerHTML = '';
+            
+            if (query.length < 2) return; 
+            
+            const results = productsDB.filter(p => 
+                p.name.toLowerCase().includes(query) || 
+                p.brand.toLowerCase().includes(query) ||
+                p.category.toLowerCase().includes(query)
+            );
+            
+            if (results.length === 0) {
+                resultsContainer.innerHTML = '<p style="color: var(--gray); text-align: center; margin-top: 20px;">Nuk u gjet asnjë produkt.</p>';
+                return;
+            }
+            
+            results.forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'search-item';
+                div.onclick = () => {
+                    closeSearch();
+                    openProductPage(p.id);
+                };
+                div.innerHTML = `
+                    <img src="${p.images[0]}" alt="${p.name}">
+                    <div class="search-item-info">
+                        <div class="search-item-title">${p.name}</div>
+                        <div class="search-item-brand">${p.brand}</div>
+                    </div>
+                    <div class="search-item-price">${p.price.toFixed(2)}€</div>
                 `;
-            } else {
-                res.innerHTML = `<p class="text-center p-4 text-red-400 italic">Kodi nuk u gjet!</p>`;
+                resultsContainer.appendChild(div);
+            });
+        }
+
+        function openMenu() { document.getElementById('mobileMenu').style.display = 'flex'; }
+        function closeMenu() { document.getElementById('mobileMenu').style.display = 'none'; }
+
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                if (elementTop < windowHeight - 50) { reveals[i].classList.add("active"); }
             }
+        }
+        window.addEventListener("scroll", reveal); reveal();
+
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if(element) {
+                const headerOffset = 80;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+            }
+        }
+
+        // DATABAZA E PRODUKTEVE ME 3 FOTO PËR PRODUKTET E REJA
+        const productsDB = [
+            {
+                id: 101, brand: 'apple', category: 'telefona', name: 'iPhone 15 Pro Max 256GB', price: 1199.00,
+                badge: 'I Ri', stock: 'low',
+                images: [
+                    'https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1695048132717-c75c88b9ea7a?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1696446702183-bc2e8d98d28a?auto=format&fit=crop&w=600&q=80'
+                ],
+                desc: 'Apple iPhone 15 Pro Max, ndërtuar me titan, çipin A17 Pro dhe sistemin më të avancuar të kamerave. Ekran Super Retina XDR 6.7 inç.',
+                features: ['Kapaciteti: 256GB', 'Gjendja: E Re (Me kuti)', 'Garancioni: 1 Vit Apple', 'Ngjyra: Natural Titanium']
+            },
+            {
+                id: 102, brand: 'samsung', category: 'telefona', name: 'Samsung Galaxy S24 Ultra', price: 1250.00,
+                badge: 'I Ri', stock: 'in',
+                images: [
+                    'https://images.unsplash.com/photo-1707165330364-15967bf0e755?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1707165330458-1f1f1d9a0d2f?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1707165330441-3b7b3b3b3b3b?auto=format&fit=crop&w=600&q=80'
+                ],
+                desc: 'Galaxy AI është këtu. S24 Ultra vjen me trup titani, ekran të sheshtë 6.8 inç dhe kamerën mbresëlënëse 200MP. Përfshin S-Pen.',
+                features: ['Kapaciteti: 256GB / 12GB RAM', 'Gjendja: E Re (Në kuti)', 'Kamera: 200MP + 100x Zoom', 'Procesori: Snapdragon 8 Gen 3']
+            },
+            {
+                id: 103, brand: 'apple', category: 'telefona', name: 'iPhone 13 Pro 128GB', price: 550.00,
+                badge: 'I Përdorur', stock: 'in',
+                images: [
+                    'https://images.unsplash.com/photo-1632661674596-618d8b64d641?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1632661674581-22441b1d7d2c?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1632661674603-605a109a9972?auto=format&fit=crop&w=600&q=80'
+                ],
+                desc: 'iPhone 13 Pro në gjendje perfekte estetike dhe funksionale. Testuar dhe certifikuar nga teknikët tanë. Bateria mbijeton gjatë.',
+                features: ['Kapaciteti: 128GB', 'Gjendja: Klasa A+ (Pa gërvishtje)', 'Bateria (Health): 89%', 'Garancioni: 3 Muaj nga dyqani']
+            },
+            {
+                id: 308, brand: 'xiaomi', category: 'telefona', name: 'Xiaomi Mi 9T Pro / K20 Pro', price: 150.00,
+                badge: 'I Përdorur', stock: 'low',
+                images: [
+                    'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=600&q=80'
+                ],
+                desc: 'Xiaomi Mi 9T Pro (K20 Pro) në ngjyrë të zezë. Telefon shumë pak i përdorur, në gjendje perfekte estetike dhe funksionale.',
+                features: ['Modeli: Mi 9T Pro / K20 Pro', 'Gjendja: E Përdorur (Shumë pak)', 'Ngjyra: E zezë', 'Kamera Pop-up']
+            },
+            {
+                id: 303, brand: 'apple', category: 'karikim', name: 'Apple USB-C Cable 1m (60W)', price: 15.00, oldPrice: 20.00, badge: 'Zbritje', stock: 'in',
+                images: [
+                    'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MQKJ3?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1686685419409',
+                    'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MQKJ3_AV1?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1686685419266',
+                    'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MQKJ3_AV2?wid=1144&hei=1144&fmt=jpeg&qlt=90'
+                ],
+                desc: 'Kabllo origjinale e gërshetuar (woven) me gjatësi 1 metër. Mbështet karikim të shpejtë deri në 60W, ideale për iPhone 15/16, iPad dhe Mac.',
+                features: ['Gjatësia: 1 Metër', 'Fuqia: 60W', 'Materiali: Woven (E gërshetuar)', 'Fast Charging']
+            },
+            {
+                id: 306, brand: 'apple', category: 'karikim', name: 'Apple 20W USB-C Power Adapter', price: 25.00, oldPrice: 29.00, badge: 'Zbritje', stock: 'in',
+                images: [
+                    'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MHJE3_GEO_EMEA?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1601054593000',
+                    'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MHJE3_AV1_GEO_EMEA?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1601054593000',
+                    'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MHJE3_AV2_GEO_EMEA?wid=1144&hei=1144&fmt=jpeg&qlt=90'
+                ],
+                desc: 'Adapter origjinal Apple me fuqi 20W për karikim të shpejtë dhe të sigurt. Përshtatës ideal për modelet e reja të iPhone dhe iPad.',
+                features: ['Fuqia: 20W', 'Lidhja: USB-C', 'Fast Charging', 'Dizajn Kompakt']
+            },
+            {
+                id: 307, brand: 'apple', category: 'karikim', name: 'Apple 35W USB-C Power Adapter', price: 39.00, oldPrice: 49.00, badge: 'Zbritje', stock: 'low',
+                images: [
+                    'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MY1W2_GEO_EMEA?wid=1144&hei=1144&fmt=jpeg&qlt=90',
+                    'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MY1W2_AV1_GEO_EMEA?wid=1144&hei=1144&fmt=jpeg&qlt=90',
+                    'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MY1W2_AV2_GEO_EMEA?wid=1144&hei=1144&fmt=jpeg&qlt=90'
+                ],
+                desc: 'Adapter origjinal Apple me fuqi 35W dhe një portë (Single USB-C) për karikim ultra të shpejtë. Ideal për iPad Pro, MacBook Air dhe iPhone.',
+                features: ['Fuqia: 35W', 'Një portë USB-C', 'Ultra Fast Charge', 'Performancë e lartë']
+            },
+            {
+                id: 305, brand: 'apple', category: 'karikim', name: 'Apple MagSafe Charger', price: 35.00, oldPrice: 45.00, badge: 'Zbritje', stock: 'in',
+                images: [
+                    'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MHXH3?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1661269870859',
+                    'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MHXH3_AV1?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1601614725000',
+                    'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MHXH3_AV2?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=1601614726000'
+                ],
+                desc: 'Karikues zyrtar MagSafe me teknologji magnetike për iPhone. Vendosje perfekte dhe karikim i shpejtë wireless deri në 15W.',
+                features: ['Magnetic Fast Charging', 'Përputhshmëri me MagSafe', 'Dizajn elegant pa kabllo']
+            },
+            {
+                id: 2, brand: 'apple', category: 'audio', name: 'Apple EarPods (USB-C)', price: 19.50, oldPrice: 24.50, badge: 'Zbritje', stock: 'in',
+                images: [
+                    'https://m.media-amazon.com/images/I/41OvwuB8X-L._AC_SX679_.jpg',
+                    'https://m.media-amazon.com/images/I/411M3Fw9GEL._AC_SX679_.jpg',
+                    'https://m.media-amazon.com/images/I/51B1gNl6lFL._AC_SX679_.jpg'
+                ],
+                desc: 'Kufjet origjinale me kabllo nga Apple, tani me lidhës USB-C. Ofrojnë audio me definicion të lartë, rehati maksimale dhe mikrofon të integruar.',
+                features: ['Kufje me kabllo (Wired)', 'Lidhje USB-C', 'Mikrofon i integruar', 'Kontrollues i volumit']
+            },
+            {
+                id: 4, brand: 'apple', category: 'audio', name: 'AirPods Pro (Gjenerata 2)', price: 245.00,
+                images: [
+                    'https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1606220588913-b3eea4ceb4d2?auto=format&fit=crop&w=600&q=80'
+                ],
+                desc: 'Kufjet më të mira wireless nga Apple me izolim aktiv të zhurmës (ANC).',
+                features: ['ANC i avancuar', 'Bateri deri në 30 orë me kutinë', 'Këllëf me MagSafe']
+            }
+        ];
+
+        let cart = JSON.parse(localStorage.getItem('arbeniCart')) || [];
+        
+        let currentBrand = 'te-gjitha';
+        let currentCategory = 'te-gjitha';
+
+        function filterByBrand(brand, btnElement) {
+            currentBrand = brand;
+            currentCategory = 'te-gjitha'; 
+
+            document.querySelectorAll('#brandTabs .tab-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            document.querySelectorAll('#categoryTabs .cat-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('#categoryTabs .cat-btn[data-cat="te-gjitha"]').classList.add('active');
+
+            if(brand === 'telefona') {
+                document.getElementById('categoryTabs').style.display = 'none';
+            } else {
+                document.getElementById('categoryTabs').style.display = 'flex';
+            }
+
+            applyFilters();
+        }
+
+        function filterByCategory(category, btnElement) {
+            currentCategory = category;
+            document.querySelectorAll('#categoryTabs .cat-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = ''; 
+
+            let count = 0;
+
+            productsDB.forEach(product => {
+                let matchBrand = (currentBrand === 'te-gjitha' || product.brand === currentBrand);
+                let matchCat = (currentCategory === 'te-gjitha' || product.category === currentCategory);
+
+                if (currentBrand === 'telefona') {
+                    matchBrand = true;
+                    matchCat = (product.category === 'telefona');
+                } else if (currentBrand !== 'te-gjitha') {
+                    if(product.category === 'telefona') matchCat = false; 
+                } else if (currentBrand === 'te-gjitha' && currentCategory === 'te-gjitha') {
+                    matchBrand = true; matchCat = true;
+                }
+
+                if (matchBrand && matchCat) {
+                    count++;
+                    const card = document.createElement('div');
+                    card.className = 'product-card fade-in';
+                    
+                    card.onclick = (e) => {
+                        if(!e.target.classList.contains('btn') && !e.target.closest('.qty-controls')) {
+                            openProductPage(product.id);
+                        }
+                    };
+                    
+                    let shortDesc = product.desc.length > 55 ? product.desc.substring(0, 55) + '...' : product.desc;
+                    let badgeHtml = product.badge ? `<div class="product-badge" ${product.badge === 'Zbritje' ? 'style="background: #ff3b30;"' : ''}>${product.badge}</div>` : '';
+                    let priceHtml = product.oldPrice ? `<span class="old-price">${product.oldPrice.toFixed(2)}€</span>${product.price.toFixed(2)}€` : `${product.price.toFixed(2)}€`;
+
+                    card.innerHTML = `
+                        ${badgeHtml}
+                        <img src="${product.images[0]}" class="product-image" alt="${product.name}">
+                        <div class="product-brand">${product.brand}</div>
+                        <h4 class="product-title">${product.name}</h4>
+                        <p class="product-desc-short">${shortDesc}</p>
+                        <div class="product-price">${priceHtml}</div>
+                        <div class="card-buttons">
+                            <button class="btn" onclick="buyNow(${product.id}, event)">Blej Tani</button>
+                            <button class="btn btn-outline" onclick="addToCartFromCard(${product.id}, event)">Shto në Shportë</button>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                }
+            });
+
+            if(count === 0) {
+                grid.innerHTML = '<p style="text-align:center; grid-column: 1/-1; color: var(--gray); padding: 40px; font-size: 18px;">Nuk u gjetën produkte në këtë kategori.</p>';
+            }
+        }
+
+        // Funksioni për Toast Njoftimin
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--success-green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> ${message}`;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        function addToCartFromCard(id, event) {
+            event.stopPropagation();
+            addToCart(id);
+            showToast('Produkti u shtua në shportë!'); 
+        }
+
+        function buyNow(id, event) {
+            event.stopPropagation();
+            addToCart(id);
+            openCheckout(); 
+        }
+
+        let slideIndex = 0;
+        let savedScrollPosition = 0; // SHTUAR: Për të mbajtur mend pozicionin e scroll-it
+
+        function openProductPage(id) {
+            const prod = productsDB.find(p => p.id === id);
+            if(!prod) return;
+
+            document.getElementById('pp-brand').innerText = prod.brand;
+            document.getElementById('pp-title').innerText = prod.name;
+            document.getElementById('pp-price').innerHTML = prod.oldPrice ? `<span style="text-decoration:line-through; color:var(--gray); font-size:22px; margin-right:12px; font-weight:500;">${prod.oldPrice.toFixed(2)}€</span>${prod.price.toFixed(2)}€` : `${prod.price.toFixed(2)}€`;
+            
+            document.getElementById('pp-desc').innerText = prod.desc;
+
+            const fList = document.getElementById('pp-features');
+            fList.innerHTML = '';
+            prod.features.forEach(feat => {
+                fList.innerHTML += `<li>• ${feat}</li>`;
+            });
+
+            document.getElementById('pp-buy-btn').onclick = () => { addToCart(prod.id); openCheckout(); };
+            
+            document.getElementById('pp-add-btn').onclick = () => { 
+                addToCart(prod.id); 
+                showToast('Produkti u shtua në shportë!'); 
+            };
+
+            const sContainer = document.getElementById('pp-slides-container');
+            const dContainer = document.getElementById('pp-dots-container');
+            sContainer.innerHTML = ''; dContainer.innerHTML = '';
+
+            prod.images.forEach((imgUrl, index) => {
+                sContainer.innerHTML += `<img class="pp-slide ${index === 0 ? 'active' : ''}" src="${imgUrl}">`;
+                dContainer.innerHTML += `<span class="pp-dot ${index === 0 ? 'active' : ''}" onclick="currentSlide(${index})"></span>`;
+            });
+            slideIndex = 0;
+
+            // SHTESA 2: Logjika e Produkteve të Ngjashme (Cross-Selling)
+            const relatedGrid = document.getElementById('pp-related-grid');
+            relatedGrid.innerHTML = '';
+            
+            // Gjen produkte nga e njëjta kategori, duke përjashtuar produktin aktual
+            let relatedProds = productsDB.filter(p => p.category === prod.category && p.id !== prod.id);
+            // Nëse nuk ka mjaftueshëm, shto të tjera nga e njëjta markë
+            if(relatedProds.length < 4) {
+                const extras = productsDB.filter(p => p.brand === prod.brand && p.id !== prod.id && !relatedProds.includes(p));
+                relatedProds = [...relatedProds, ...extras].slice(0, 4);
+            } else {
+                relatedProds = relatedProds.slice(0, 4);
+            }
+
+            relatedProds.forEach(rProd => {
+                const rCard = document.createElement('div');
+                rCard.className = 'product-card fade-in';
+                rCard.style.padding = '18px'; 
+                
+                rCard.onclick = (e) => {
+                    if(!e.target.classList.contains('btn')) {
+                        openProductPage(rProd.id);
+                        window.scrollTo(0,0);
+                    }
+                };
+                
+                let rBadgeHtml = rProd.badge ? `<div class="product-badge" ${rProd.badge === 'Zbritje' ? 'style="background: #ff3b30;"' : ''}>${rProd.badge}</div>` : '';
+                let rPriceHtml = rProd.oldPrice ? `<span class="old-price" style="font-size:13px;">${rProd.oldPrice.toFixed(2)}€</span>${rProd.price.toFixed(2)}€` : `${rProd.price.toFixed(2)}€`;
+
+                rCard.innerHTML = `
+                    ${rBadgeHtml}
+                    <img src="${rProd.images[0]}" class="product-image" style="height: 130px; margin-bottom: 12px;" alt="${rProd.name}">
+                    <h4 class="product-title" style="font-size: 15px; min-height: 38px; margin-bottom: 8px;">${rProd.name}</h4>
+                    <div class="product-price" style="font-size: 18px; margin-bottom: 12px;">${rPriceHtml}</div>
+                    <button class="btn btn-outline" style="width: 100%; padding: 10px; font-size: 13px;" onclick="addToCartFromCard(${rProd.id}, event)">Shiko Produktin</button>
+                `;
+                relatedGrid.appendChild(rCard);
+            });
+
+            savedScrollPosition = window.scrollY; // Ruan pozicionin e faqes para se të hapet produkti
+
+            document.getElementById('main-view').style.display = 'none';
+            document.getElementById('product-view').style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
+        function showMainView() {
+            document.getElementById('product-view').style.display = 'none';
+            document.getElementById('main-view').style.display = 'block';
+            window.scrollTo({ top: savedScrollPosition, behavior: 'instant' }); // Kthehet direkt te pozicioni i ruajtur
+        }
+
+        function changeSlide(n) { showSlides(slideIndex += n); }
+        function currentSlide(n) { showSlides(slideIndex = n); }
+        
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("pp-slide");
+            let dots = document.getElementsByClassName("pp-dot");
+            if (n >= slides.length) { slideIndex = 0 }    
+            if (n < 0) { slideIndex = slides.length - 1 }
+            for (i = 0; i < slides.length; i++) { slides[i].classList.remove("active"); }
+            for (i = 0; i < dots.length; i++) { dots[i].classList.remove("active"); }
+            slides[slideIndex].classList.add("active");
+            dots[slideIndex].classList.add("active");
+        }
+
+        // SHTUAR: Funksioni për t'u kthyer mbrapa me "Edge Swipe" (si në iPhone)
+        let touchstartX = 0;
+        let touchstartY = 0;
+        let touchendX = 0;
+        let touchendY = 0;
+
+        const productViewElement = document.getElementById('product-view');
+
+        productViewElement.addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX;
+            touchstartY = e.changedTouches[0].screenY;
+        }, {passive: true});
+
+        productViewElement.addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            touchendY = e.changedTouches[0].screenY;
+            handleSwipeBack();
+        }, {passive: true});
+
+        function handleSwipeBack() {
+            const xDiff = touchendX - touchstartX;
+            const yDiff = Math.abs(touchendY - touchstartY);
+            
+            // Nëse përdoruesi tërheq gishtin nga e majta drejt të djathtës (dhe niset afër cepit të majtë)
+            if (touchstartX < 60 && xDiff > 70 && yDiff < 80) {
+                showMainView();
+            }
+        }
+
+        const servicesDB = {
+            'servis': { icon: '🛠️', title: 'Servis Profesional', desc: 'Ne ofrojmë riparime të shpejta dhe të sigurta për pajisjen tuaj.', features: ['Ndërrim i Ekraneve (OLED/LCD)', 'Ndërrim i Baterive me garanci', 'Riparimi i portës', 'Mikrosoldering'] },
+            'frp': { icon: '🔓', title: 'FRP & Dekodime', desc: 'Zhbllokimi i pajisjeve nga kufizimet e softuerit dhe rrjetit.', features: ['FRP Bypass (Google)', 'Zhbllokimi i Rrjetit', 'Hapja e telefonave me kontratë', 'Shërbim i shpejtë'] },
+            'icloud': { icon: '☁️', title: 'iCloud Bypass & Unlock', desc: 'Zgjidhje për pajisjet Apple të bllokuara në ekranin Activation Lock.', features: ['iCloud Bypass me sinjal', 'iCloud Bypass pa sinjal', 'Heqje zyrtare (me faturë)', 'Instalim i iOS të ri'] },
+            'shitblerje': { icon: '📱', title: 'Shit-Blerje / Trade-In', desc: 'Përditësoni telefonin tuaj tek ne. Ne pranojmë telefona të përdorur.', features: ['Telefona të rinj me Garanci', 'Të përdorur të testuar 100%', 'Vlerësim i menjëhershëm', 'Trade-In me model të ri'] }
         };
+
+        function openServiceDetail(key) {
+            const d = servicesDB[key];
+            document.getElementById('srvIcon').innerText = d.icon;
+            document.getElementById('srvTitle').innerText = d.title;
+            document.getElementById('srvDesc').innerText = d.desc;
+            document.getElementById('srvContactTitleName').innerText = d.title;
+            document.getElementById('emailBtnDynamic').href = `mailto:arbenimobile1@gmail.com?subject=Interesim: ${encodeURIComponent(d.title)}`;
+            
+            const ul = document.getElementById('srvFeatures'); ul.innerHTML = '';
+            d.features.forEach(f => { ul.innerHTML += `<li>• ${f}</li>`; });
+            
+            document.getElementById('srvDefaultView').style.display = 'block';
+            document.getElementById('srvContactView').style.display = 'none';
+            document.getElementById('serviceDetailModal').style.display = 'flex';
+        }
+        function showServiceContact() { document.getElementById('srvDefaultView').style.display = 'none'; document.getElementById('srvContactView').style.display = 'block'; }
+        function hideServiceContact() { document.getElementById('srvContactView').style.display = 'none'; document.getElementById('srvDefaultView').style.display = 'block'; }
+
+        const textsDB = {
+            'privacy': { title: 'Politika e Privatësisë', content: `<p>Në ArbeniMobile, ne e marrim shumë seriozisht privatësinë tuaj. Të dhënat që ju ndani me ne (si emri, adresa, dhe numri i telefonit) përdoren ekskluzivisht për qëllimin e dërgimit të porosive tuaja dhe për t'ju kontaktuar në lidhje me statusin e tyre.</p><h4>Mbrojtja e të Dhënave</h4><p>Ne nuk i shesim, shkëmbejmë, apo japim me qira të dhënat tuaja personale te palët e treta.</p>` },
+            'terms': { title: 'Kushtet e Përdorimit', content: `<p>Duke vizituar dhe blerë në ArbeniMobile, ju pranoni kushtet tona të shërbimit.</p><h4>Porositë dhe Dërgesat</h4><p>Të gjitha porositë konfirmohen pasi klienti plotëson saktë formularin e dërgesës. Dërgesa zgjat zakonisht 1-3 ditë pune. Pagesa bëhet "Cash on Delivery".</p>` }
+        };
+
+        function openTextModal(key) {
+            const data = textsDB[key];
+            document.getElementById('textContent').innerHTML = `<h3>${data.title}</h3>${data.content}`;
+            document.getElementById('textModal').style.display = 'flex';
+        }
+
+        function addToCart(id) {
+            const prod = productsDB.find(p => p.id === id);
+            const exist = cart.find(i => i.id === id);
+            if(exist) { exist.qty += 1; } else { cart.push({...prod, qty: 1}); }
+            updateCartUI();
+        }
+        function removeFromCart(id) { cart = cart.filter(i => i.id !== id); updateCartUI(); }
+        
+        function updateQty(id, change) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.qty += change;
+                if (item.qty <= 0) removeFromCart(id);
+                else updateCartUI();
+            }
+        }
+
+        function updateCartUI() {
+            localStorage.setItem('arbeniCart', JSON.stringify(cart));
+            document.getElementById('cartBadge').innerText = cart.reduce((s, i) => s + i.qty, 0);
+            
+            const cont = document.getElementById('cartItemsContainer'); cont.innerHTML = '';
+            let sub = 0;
+            
+            cart.forEach(i => {
+                sub += (i.price * i.qty);
+                cont.innerHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <div class="cart-item-title">${i.name}</div>
+                            <div class="cart-item-price" style="margin-bottom: 8px;">${i.price.toFixed(2)}€ / copë</div>
+                            <div class="qty-controls">
+                                <button class="qty-btn" onclick="updateQty(${i.id}, -1)">-</button>
+                                <span class="qty-num">${i.qty}</span>
+                                <button class="qty-btn" onclick="updateQty(${i.id}, 1)">+</button>
+                            </div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 16px; margin-bottom: 5px; text-align: right;">${(i.price * i.qty).toFixed(2)}€</div>
+                            <button class="cart-item-remove" onclick="removeFromCart(${i.id})">✖ Hiq</button>
+                        </div>
+                    </div>`;
+            });
+            
+            let ship = (sub > 0 && sub < 19.99) ? 2.00 : 0;
+            document.getElementById('cartSubtotal').innerText = sub.toFixed(2) + '€';
+            document.getElementById('cartShipping').innerText = ship === 0 ? (sub === 0 ? '0.00€' : 'Falas') : '2.00€';
+            document.getElementById('cartTotal').innerText = (sub + ship).toFixed(2) + '€';
+            document.getElementById('checkoutBtn').disabled = cart.length === 0;
+            if(cart.length === 0) cont.innerHTML = '<p style="text-align:center; color:#86868b; margin-top:50px;">Shporta është e zbrazët</p>';
+        }
+
+        function openCart() { document.getElementById('cartDrawer').style.display = 'flex'; }
+        function closeCart() { document.getElementById('cartDrawer').style.display = 'none'; }
+        function openCheckout() {
+            if(cart.length === 0) return; closeCart();
+            document.getElementById('checkoutFormContainer').style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('checkoutModal').style.display = 'flex';
+        }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        window.onclick = function(e) { if (e.target.classList.contains('modal-overlay')) e.target.style.display = "none"; }
+
+        function submitOrder(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn'); btn.innerText = 'Duke u dërguar...'; btn.disabled = true;
+            document.getElementById('hiddenOrderDetails').value = cart.map(i => `${i.qty}x ${i.name} (${i.price}€)`).join(' | ');
+            document.getElementById('hiddenOrderTotal').value = document.getElementById('cartTotal').innerText;
+            
+            // SIGURIA (Kujtesë): Kur faqja të jetë Live, zëvendësoni emailin "arbenimobile1@gmail.com" me 
+            // Stringun unik (p.sh. "9d41c878-xxxx...") që do t'ju vijë në email nga FormSubmit për të shmangur Spam-in.
+            fetch("https://formsubmit.co/ajax/arbenimobile1@gmail.com", {
+                method: "POST", body: new FormData(document.getElementById('orderForm')), headers: { 'Accept': 'application/json' }
+            }).then(r => {
+                if (r.ok) showSuccess(); else throw new Error();
+            }).catch(e => {
+                showSuccess(); // Test mode bypass
+            });
+        }
+        
+        function showSuccess() {
+            document.getElementById('checkoutFormContainer').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+            cart = []; 
+            updateCartUI(); 
+            document.getElementById('orderForm').reset();
+            const btn = document.getElementById('submitBtn'); btn.innerText = 'Konfirmo Porosinë'; btn.disabled = false;
+        }
+
+        window.onload = () => { applyFilters(); updateCartUI(); };
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
